@@ -14,8 +14,10 @@ class PopupViewController: UIViewController , UIGestureRecognizerDelegate {
     weak var shuffleListener : ShuffleListener?
     var code : String?
     
+    @IBOutlet weak var imageIcon: UIImageView!
     @IBOutlet weak var codeLabel: UILabel!
     
+    @IBOutlet weak var imageIconHeightConstraint: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -34,16 +36,6 @@ class PopupViewController: UIViewController , UIGestureRecognizerDelegate {
         view.addGestureRecognizer(tap)
 
     }
-    
-    static func showPopup(parentVC: UIViewController){
-        //creating a reference for the dialogView controller
-        if let popupViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: identifier) as? PopupViewController {
-        popupViewController.modalPresentationStyle = .custom
-        popupViewController.modalTransitionStyle = .crossDissolve
-        //presenting the pop up viewController from the parent viewController
-        parentVC.present(popupViewController, animated: true)
-        }
-      }
 
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
         self.dismiss(animated: false, completion: nil)
@@ -55,5 +47,17 @@ class PopupViewController: UIViewController , UIGestureRecognizerDelegate {
     @IBAction func shuffleTapped(_ sender: Any) {
         shuffleListener?.onShuffleReceived()
         self.dismiss(animated: false, completion: nil)
+    }
+    
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { context in
+            if UIApplication.shared.statusBarOrientation.isLandscape {
+                self.imageIconHeightConstraint.constant = 0
+                self.imageIcon.isHidden = true
+            } else {
+                self.imageIcon.isHidden = false
+                self.imageIconHeightConstraint.constant = 64
+            }
+        })
     }
 }
