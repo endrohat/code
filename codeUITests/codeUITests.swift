@@ -9,34 +9,134 @@ import XCTest
 
 class codeUITests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
-        continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testLineGetsInsertedWhileTyping() throws {
         let app = XCUIApplication()
         app.launch()
+        
+        app.textFields["codeTextField"].tap()
+        app.textFields["codeTextField"].typeText("abcdef")
+        
+        XCTAssertEqual("abc-def", (app.textFields["codeTextField"].value as! String))
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    }
+    
+    func testSizeOfCodeDoesNotExceedLimit() throws {
+       
+        let app = XCUIApplication()
+        app.launch()
+        XCUIDevice.shared.orientation = .portrait
+        
+        app.textFields["codeTextField"].tap()
+        app.textFields["codeTextField"].typeText("abcdeferw")
+        
+        XCTAssertEqual("abc-def", (app.textFields["codeTextField"].value as! String))
+            
+    }
+    
+    func testSaveCode() throws {
+      
+        let app = XCUIApplication()
+        app.launch()
+        XCUIDevice.shared.orientation = .portrait
+        
+        app.textFields["codeTextField"].tap()
+        app.textFields["codeTextField"].typeText("abcdef")
+        
+        XCTAssertEqual("abc-def", (app.textFields["codeTextField"].value as! String))
+        
+        app.terminate()
+        app.launch()
+        
+        XCTAssertTrue(app.staticTexts["codeLabel"].exists)
+        XCTAssertEqual("abc-def", (app.staticTexts["codeLabel"].label))
+    }
+    
+    
+    func testShuffleCode() throws {
+        
+        let app = XCUIApplication()
+        app.launch()
+        XCUIDevice.shared.orientation = .portrait
+        
+        app.textFields["codeTextField"].tap()
+        app.textFields["codeTextField"].typeText("abcdef")
+        
+        XCTAssertEqual("abc-def", (app.textFields["codeTextField"].value as! String))
+        
+        app.buttons["Popup"].tap()
+        app.buttons["Shuffle"].tap()
+        
+        XCTAssertEqual("def-abc", (app.textFields["codeTextField"].value as! String))
+        
+        app.terminate()
+        app.launch()
+        
+        XCTAssertTrue(app.staticTexts["codeLabel"].exists)
+        XCTAssertEqual("def-abc", (app.staticTexts["codeLabel"].label))
+    }
+    
+    func testDismissCode() throws {
+
+        let app = XCUIApplication()
+        app.launch()
+        XCUIDevice.shared.orientation = .portrait
+        
+        app.textFields["codeTextField"].tap()
+        app.textFields["codeTextField"].typeText("abcdef")
+        
+        XCTAssertEqual("abc-def", (app.textFields["codeTextField"].value as! String))
+        
+        app.buttons["Popup"].tap()
+        app.buttons["Dismiss"].tap()
+        
+        XCTAssertEqual("abc-def", (app.textFields["codeTextField"].value as! String))
+        
+        app.terminate()
+        app.launch()
+        
+        XCTAssertTrue(app.staticTexts["codeLabel"].exists)
+        XCTAssertEqual("abc-def", (app.staticTexts["codeLabel"].label))
+    }
+    
+    func testLandscapeIcon() throws {
+        
+        let app = XCUIApplication()
+        app.launch()
+        XCUIDevice.shared.orientation = .portrait
+        
+        app.textFields["codeTextField"].tap()
+        app.textFields["codeTextField"].typeText("abcdef")
+        
+        XCTAssertEqual("abc-def", (app.textFields["codeTextField"].value as! String))
+        
+        app.buttons["Popup"].tap()
+        
+        XCTAssertTrue(app.images["imageIcon"].isHittable)
+        
+        XCUIDevice.shared.orientation = .landscapeLeft
+        
+        XCTAssertFalse(app.images["imageIcon"].isHittable)
+        
+        XCUIDevice.shared.orientation = .portrait
+        
+        XCTAssertTrue(app.images["imageIcon"].isHittable)
+    }
+    
+    func testInvalidCodeDoesNotTriggerPopup() throws {
+       
+        let app = XCUIApplication()
+        app.launch()
+        XCUIDevice.shared.orientation = .portrait
+        
+        app.textFields["codeTextField"].tap()
+        app.textFields["codeTextField"].typeText("abc")
+        
+        XCTAssertEqual("abc", (app.textFields["codeTextField"].value as! String))
+        
+        app.buttons["Popup"].tap()
+        
+        XCTAssertFalse(app.images["imageIcon"].exists)
+        
     }
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
-    }
 }

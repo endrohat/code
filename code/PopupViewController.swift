@@ -10,7 +10,6 @@ import UIKit
 class PopupViewController: UIViewController , UIGestureRecognizerDelegate {
 
     @IBOutlet weak var popupView: UIView!
-    static let identifier = "PopupViewController"
     weak var shuffleListener : ShuffleListener?
     var code : String?
     
@@ -25,7 +24,6 @@ class PopupViewController: UIViewController , UIGestureRecognizerDelegate {
             //customizing the dialog box view
         popupView.layer.cornerRadius = 6.0
         popupView.layer.borderWidth = 1.2
-        //popupView.layer.borderColor = UIColor(named: "dialogBoxGray")?.cgColor
         popupView.layer.borderColor = UIColor.gray.cgColor
         popupView.isUserInteractionEnabled = true
         
@@ -46,6 +44,10 @@ class PopupViewController: UIViewController , UIGestureRecognizerDelegate {
     }
     @IBAction func shuffleTapped(_ sender: Any) {
         shuffleListener?.onShuffleReceived()
+        self.dismiss(animated: false, completion: nil)
+    }
+    
+    @IBAction func dismissTapped(_ sender: Any) {
         self.dismiss(animated: false, completion: nil)
     }
     

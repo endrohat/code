@@ -12,6 +12,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var codeTextField: UITextField!
     static let identifier = "PopupViewController"
     
+    @IBOutlet weak var codeLabel: UILabel!
+    let keychainHelper = KeychainHelper()
+    
     @IBAction func popupTapped(_ sender: Any) {
         if TextHelper.checkValidCode(code: codeTextField.text ?? "") {
         
@@ -28,12 +31,16 @@ class ViewController: UIViewController {
         }
         
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         codeTextField.delegate = self
+        if let code = keychainHelper.retrieveCode() {
+            codeLabel.text = code
+        }
     }
-
+    
 }
 
 
@@ -41,13 +48,17 @@ extension ViewController : ShuffleListener {
     func onShuffleReceived() {
         if let text = codeTextField.text {
             codeTextField.text = TextHelper.shuffleString(code: text)
+            keychainHelper.saveCode(code: codeTextField.text!)
         }
-       
     }
     
 }
 
 extension ViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            textField.resignFirstResponder() // dismiss keyboard
+            return true
+        }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
  
@@ -63,6 +74,14 @@ extension ViewController : UITextFieldDelegate {
         if updatedText.count > 7 {
             return false
         }
+
+        
+        let codePattern = "[a-z]{0,3}-?[a-z]{0,3}"
+        let pred = NSPredicate(format:"SELF MATCHES %@", codePattern)
+        if !pred.evaluate(with: updatedText) {
+            return false
+        }
+        
         if updatedText.count <= 3 {
             return true
         }
@@ -72,6 +91,7 @@ extension ViewController : UITextFieldDelegate {
             let thirdIndex = updatedText.index(updatedText.startIndex, offsetBy: 3)
             updatedText.insert("-", at: thirdIndex)
             textField.text = updatedText
+            keychainHelper.saveCode(code: updatedText)
             return false
         }
         
@@ -84,6 +104,7 @@ extension ViewController : UITextFieldDelegate {
         let thirdIndex = newString.index(newString.startIndex, offsetBy: 3)
         newString.insert("-", at: thirdIndex)
         textField.text = newString
+        keychainHelper.saveCode(code: newString)
         return false
     }
 }
