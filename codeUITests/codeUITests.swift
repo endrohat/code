@@ -12,12 +12,36 @@ class codeUITests: XCTestCase {
     func testLineGetsInsertedWhileTyping() throws {
         let app = XCUIApplication()
         app.launch()
+        XCUIDevice.shared.orientation = .portrait
         
         app.textFields["codeTextField"].tap()
         app.textFields["codeTextField"].typeText("abcdef")
         
         XCTAssertEqual("abc-def", (app.textFields["codeTextField"].value as! String))
 
+    }
+    
+    func testLandscapePopupTap() throws {
+        let app = XCUIApplication()
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        
+        app.textFields["codeTextField"].tap()
+        app.textFields["codeTextField"].typeText("abcdef\n")
+    
+        app.buttons["Popup"].tap()
+    }
+    
+    func testInvalidCodeDoesNotPopup() throws {
+        let app = XCUIApplication()
+        app.launch()
+        XCUIDevice.shared.orientation = .landscapeLeft
+        
+        app.textFields["codeTextField"].tap()
+        app.textFields["codeTextField"].typeText("abc\n")
+    
+        app.buttons["Popup"].tap()
+        XCTAssertFalse(app.buttons["Shuffle"].exists)
     }
     
     func testSizeOfCodeDoesNotExceedLimit() throws {

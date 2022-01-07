@@ -17,10 +17,11 @@
 		09294B28278379F60038EEDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09294B27278379F60038EEDC /* Assets.xcassets */; };
 		09294B2B278379F60038EEDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09294B29278379F60038EEDC /* LaunchScreen.storyboard */; };
 		09294B40278379F60038EEDC /* codeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09294B3F278379F60038EEDC /* codeUITests.swift */; };
-		09294B42278379F60038EEDC /* codeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09294B41278379F60038EEDC /* codeUITestsLaunchTests.swift */; };
 		0931966A278481C5003D9125 /* PopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09319669278481C5003D9125 /* PopupViewController.swift */; };
 		0949182427875A7C00B0B866 /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 0949182327875A7C00B0B866 /* KeychainSwift */; };
 		0949182627875AD800B0B866 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0949182527875AD800B0B866 /* KeychainHelper.swift */; };
+		0949182927877A6400B0B866 /* ViewController-UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0949182827877A6400B0B866 /* ViewController-UITextFieldExtension.swift */; };
+		0949182B27877AFB00B0B866 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0949182A27877AFB00B0B866 /* StringExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,9 +56,10 @@
 		09294B31278379F60038EEDC /* codeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		09294B3B278379F60038EEDC /* codeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = codeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		09294B3F278379F60038EEDC /* codeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = codeUITests.swift; sourceTree = "<group>"; };
-		09294B41278379F60038EEDC /* codeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = codeUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		09319669278481C5003D9125 /* PopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupViewController.swift; sourceTree = "<group>"; };
 		0949182527875AD800B0B866 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		0949182827877A6400B0B866 /* ViewController-UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController-UITextFieldExtension.swift"; sourceTree = "<group>"; };
+		0949182A27877AFB00B0B866 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,17 +111,16 @@
 		09294B1D278379F50038EEDC /* code */ = {
 			isa = PBXGroup;
 			children = (
+				0949182D27877B4100B0B866 /* viewcontrollers */,
+				0949182C27877B2200B0B866 /* helpers */,
+				0949182727877A2500B0B866 /* extensions */,
 				09294B1E278379F50038EEDC /* AppDelegate.swift */,
 				09294B20278379F50038EEDC /* SceneDelegate.swift */,
-				09294B22278379F50038EEDC /* ViewController.swift */,
 				09294B24278379F50038EEDC /* Main.storyboard */,
 				09294B27278379F60038EEDC /* Assets.xcassets */,
 				09294B29278379F60038EEDC /* LaunchScreen.storyboard */,
 				09294B2C278379F60038EEDC /* Info.plist */,
-				09319669278481C5003D9125 /* PopupViewController.swift */,
 				091D53902784B3890002B4B6 /* ShuffleListener.swift */,
-				091D53922784B57B0002B4B6 /* TextHelper.swift */,
-				0949182527875AD800B0B866 /* KeychainHelper.swift */,
 			);
 			path = code;
 			sourceTree = "<group>";
@@ -136,9 +137,35 @@
 			isa = PBXGroup;
 			children = (
 				09294B3F278379F60038EEDC /* codeUITests.swift */,
-				09294B41278379F60038EEDC /* codeUITestsLaunchTests.swift */,
 			);
 			path = codeUITests;
+			sourceTree = "<group>";
+		};
+		0949182727877A2500B0B866 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0949182827877A6400B0B866 /* ViewController-UITextFieldExtension.swift */,
+				0949182A27877AFB00B0B866 /* StringExtension.swift */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		0949182C27877B2200B0B866 /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+				091D53922784B57B0002B4B6 /* TextHelper.swift */,
+				0949182527875AD800B0B866 /* KeychainHelper.swift */,
+			);
+			path = helpers;
+			sourceTree = "<group>";
+		};
+		0949182D27877B4100B0B866 /* viewcontrollers */ = {
+			isa = PBXGroup;
+			children = (
+				09319669278481C5003D9125 /* PopupViewController.swift */,
+				09294B22278379F50038EEDC /* ViewController.swift */,
+			);
+			path = viewcontrollers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,9 +306,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				09294B23278379F50038EEDC /* ViewController.swift in Sources */,
+				0949182927877A6400B0B866 /* ViewController-UITextFieldExtension.swift in Sources */,
 				09294B1F278379F50038EEDC /* AppDelegate.swift in Sources */,
 				091D53912784B3890002B4B6 /* ShuffleListener.swift in Sources */,
 				09294B21278379F50038EEDC /* SceneDelegate.swift in Sources */,
+				0949182B27877AFB00B0B866 /* StringExtension.swift in Sources */,
 				0949182627875AD800B0B866 /* KeychainHelper.swift in Sources */,
 				091D53932784B57B0002B4B6 /* TextHelper.swift in Sources */,
 				0931966A278481C5003D9125 /* PopupViewController.swift in Sources */,
@@ -301,7 +330,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				09294B40278379F60038EEDC /* codeUITests.swift in Sources */,
-				09294B42278379F60038EEDC /* codeUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

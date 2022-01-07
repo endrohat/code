@@ -33,6 +33,10 @@ class PopupViewController: UIViewController , UIGestureRecognizerDelegate {
         tap.delegate = self
         view.addGestureRecognizer(tap)
 
+        if UIApplication.shared.statusBarOrientation.isLandscape {
+            self.imageIconHeightConstraint.constant = 0
+            self.imageIcon.isHidden = true
+        }
     }
 
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
